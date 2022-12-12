@@ -1,0 +1,7 @@
+---
+# defaults file for redis
+redis_count_instance: 1
+image: redis:alpine
+path_redis: /docker/redis_ansible
+path_data_container: /data
+redis_maxmemory: 6gb

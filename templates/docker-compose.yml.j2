@@ -1,0 +1,16 @@
+version: '3'
+services:
+{% for i in range(redis_count_instance) %}
+  redis{{i}}:
+        image: "{{ image }}"
+        environment:
+            TZ: "Europe/Moscow"
+        restart: always
+        command: ["redis-server", "--appendonly", "yes", "--maxmemory", "{{ redis_maxmemory }}", "--maxmemory-policy", "allkeys-lru"]
+        volumes:
+            - {{ path_redis }}/redis{{i}}_data:{{ path_data_container }}
+        ports:
+            - "638{{i}}:6379"
+        sysctls:
+            net.core.somaxconn: 65000
+{% endfor %}

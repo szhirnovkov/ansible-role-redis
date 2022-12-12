@@ -1,0 +1,16 @@
+---
+- name: create a directory for redis
+  ansible.builtin.file:
+    path: "{{ path_redis }}"
+    state: directory
+    mode: '0775'
+  become: true
+
+- name: copy configs
+  ansible.builtin.template:
+    src: templates/docker-compose.yml.j2
+    dest: "{{ path_redis }}/docker-compose.yml"
+
+- name: docker-compose up
+  ansible.builtin.command: sudo docker-compose -f {{ path_redis }}/docker-compose.yml up -d
+#
